@@ -8,7 +8,7 @@
 Hangman::Hangman() {
     generateSecretWord();
     guesses = 0;
-    maxGuesses = secretWord.size() + MAX_ERRORS;
+    mistakes = 0;
 }
 
 void Hangman::generateSecretWord() {
@@ -26,11 +26,17 @@ void Hangman::guess(const char& guess) {
     } else {
         guesses++;
         guessedChars.push_back(guess);
+        bool madeMistake = true;
 
         for (char character : secretWord) {
             if (character == guess) {
                 correctlyGuessedChars.push_back(character);
+                madeMistake = false;
             }
+        }
+        
+        if (madeMistake) {
+            mistakes++;
         }
     }
 }
@@ -50,7 +56,7 @@ void Hangman::displayWord() {
 
 bool Hangman::isActive() {
     if (correctlyGuessedChars.size() == secretWord.size() ||
-        guesses > maxGuesses) {
+        mistakes > MAX_MISTAKES) {
         return false;
     }
 
@@ -58,9 +64,9 @@ bool Hangman::isActive() {
 }
 
 void Hangman::gameOver() {
-    if (guesses > maxGuesses) {
-        std::cout << "Game over. The secret word was " << secretWord << "." << std::endl;
-    } else {
+    if (correctlyGuessedChars.size() == secretWord.size()) {
         std::cout << "You guessed it! It took you " << guesses << " guesses." << std::endl;
+    } else {
+        std::cout << "Game over. The secret word was " << secretWord << "." << std::endl;
     }
 }

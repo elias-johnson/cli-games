@@ -1,18 +1,21 @@
 #include <iostream>
+#include <string>
 
 #include "Hangman.h"
+#include "game_utils.h"
 
 int main() {
     Hangman hangmanGame;
-    char guess;
-
     hangmanGame.displayWord();
 
     while (hangmanGame.isActive()) {
-        std::cout << "Guess a letter: "; // maybe have a general utils class...one that takes user input with a prompt
-        std::cin >> guess;
-        
-        hangmanGame.guess(guess);
+        std::string guess = promptUser("Guess a letter");
+
+        if (guess.size() != 1) {
+            std::cout << "Input must be 1 character." << std::endl;
+        } else {
+            hangmanGame.guess(guess[0]);
+        }
 
         hangmanGame.displayWord();
     }

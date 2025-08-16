@@ -4,13 +4,13 @@
 #include <string>
 #include <vector>
 
-/* Maximum errors a player can make before the game is over */
-const int MAX_ERRORS = 6;
+/* Maximum mistakes a player can make before the game is over */
+const int MAX_MISTAKES = 6;
 
 class Hangman {
 private:
     int guesses;
-    int maxGuesses;
+    int mistakes;
     std::string secretWord;
     std::vector<char> guessedChars;
     std::vector<char> correctlyGuessedChars;

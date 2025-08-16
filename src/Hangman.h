@@ -10,7 +10,7 @@ const int MAX_ERRORS = 6;
 class Hangman {
 private:
     int guesses;
-    int errors;
+    int maxGuesses;
     std::string secretWord;
     std::vector<char> guessedChars;
     std::vector<char> correctlyGuessedChars;

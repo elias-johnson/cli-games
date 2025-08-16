@@ -6,9 +6,9 @@
 #include "Hangman.h"
 
 Hangman::Hangman() {
-    guesses = 0;
-    errors = 0;
     generateSecretWord();
+    guesses = 0;
+    maxGuesses = secretWord.size() + MAX_ERRORS;
 }
 
 void Hangman::generateSecretWord() {
@@ -26,17 +26,11 @@ void Hangman::guess(const char& guess) {
     } else {
         guesses++;
         guessedChars.push_back(guess);
-        bool correct = false;
 
         for (char character : secretWord) {
             if (character == guess) {
-                correct = true;
                 correctlyGuessedChars.push_back(character);
             }
-        }
-
-        if (!correct) {
-            errors++;
         }
     }
 }
@@ -56,7 +50,7 @@ void Hangman::displayWord() {
 
 bool Hangman::isActive() {
     if (correctlyGuessedChars.size() == secretWord.size() ||
-        errors > MAX_ERRORS) {
+        guesses > maxGuesses) {
         return false;
     }
 
@@ -64,7 +58,7 @@ bool Hangman::isActive() {
 }
 
 void Hangman::gameOver() {
-    if (errors > MAX_ERRORS) {
+    if (guesses > maxGuesses) {
         std::cout << "Game over. The secret word was " << secretWord << "." << std::endl;
     } else {
         std::cout << "You guessed it! It took you " << guesses << " guesses." << std::endl;
